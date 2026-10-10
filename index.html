@@ -1,533 +1,953 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ondrej Hacker | Personal Website</title>
-  <style>
-    :root {
-      --bg: #f3f6fb;
-      --panel: #ffffff;
-      --panel-soft: #f7f9fc;
-      --text: #1f2937;
-      --muted: #51607a;
-      --primary: #0d5bd7;
-      --primary-soft: #eaf2ff;
-      --accent: #0b3a8a;
-      --line: #dfe7f4;
-      --green: #1d9d72;
-      --shadow: 0 10px 30px rgba(21, 39, 69, 0.08);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ondrej Hacker - Academic Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-    }
+        :root {
+            --primary: #0f5fb8;
+            --primary-light: #1a7dd8;
+            --primary-dark: #0a3f7d;
+            --accent: #00d4ff;
+            --bg: #0a0e27;
+            --bg-light: #13172d;
+            --bg-lighter: #1a1f3a;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: #2d3748;
+            --success: #10b981;
+        }
 
-    a {
-      color: var(--primary);
-      text-decoration: none;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    a:hover { text-decoration: underline; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-light) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
 
-    .page {
-      max-width: 1200px;
-      margin: 32px auto;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      overflow: hidden;
-    }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
 
-    .topbar {
-      background: linear-gradient(135deg, #0d5bd7, #0b3a8a);
-      color: white;
-      padding: 24px 36px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
 
-    .name {
-      font-size: clamp(1.5rem, 2vw, 2.3rem);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
 
-    .nav {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      font-size: 0.96rem;
-    }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-    .nav a {
-      color: white;
-      opacity: 0.9;
-    }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-    .content {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      min-height: 100vh;
-    }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
 
-    .sidebar {
-      background: var(--panel-soft);
-      border-right: 1px solid var(--line);
-      padding: 28px 24px;
-    }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+        }
 
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
+        /* Main Content */
+        main {
+            padding-top: 80px;
+        }
 
-    .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #0d5bd7, #2d87ff);
-      color: white;
-      font-weight: 700;
-      font-size: 1.6rem;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 12px 24px rgba(13, 91, 215, 0.25);
-    }
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 2rem;
+            scroll-margin-top: 80px;
+        }
 
-    .profile h3 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
 
-    .profile p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, rgba(15, 95, 184, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    .block {
-      margin-bottom: 32px;
-    }
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
 
-    .block h4 {
-      font-size: 1.05rem;
-      margin: 0 0 12px;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: inline-block;
-    }
+        .hero-text .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
 
-    .skills-list, .lang-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
 
-    .skills-list li, .lang-list li {
-      margin: 8px 0;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
-    .skills-list li::before, .lang-list li::before {
-      content: "•";
-      color: var(--primary);
-      font-size: 1.3rem;
-      line-height: 1;
-    }
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      font-size: 0.95rem;
-      color: var(--text);
-    }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 8px 24px rgba(15, 95, 184, 0.3);
+        }
 
-    .info-grid strong {
-      color: var(--primary);
-    }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(15, 95, 184, 0.4);
+        }
 
-    .main {
-      padding: 30px 30px 40px;
-    }
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
 
-    .section {
-      margin-bottom: 32px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--line);
-    }
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
 
-    .section:last-child {
-      border-bottom: none;
-    }
+        .hero-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
+        .image-placeholder {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(15, 95, 184, 0.2), rgba(0, 212, 255, 0.2));
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            overflow: hidden;
+        }
 
-    .section-header h2 {
-      margin: 0;
-      font-size: 1.25rem;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .entry {
-      margin-bottom: 22px;
-    }
+        /* Section Headers */
+        .section-header {
+            margin-bottom: 3rem;
+        }
 
-    .meta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
-    }
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .meta-row h3 {
-      margin: 0;
-      font-size: 1.15rem;
-      color: var(--text);
-    }
+        .section-header .line {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
 
-    .dates {
-      font-size: 0.82rem;
-      color: var(--muted);
-      white-space: nowrap;
-      font-weight: 600;
-    }
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
 
-    .place {
-      color: var(--muted);
-      font-size: 0.94rem;
-      margin-bottom: 8px;
-    }
+        .education-card {
+            background: var(--bg-lighter);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
 
-    .details {
-      margin: 0;
-      color: var(--text);
-      padding-left: 18px;
-    }
+        .education-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.1);
+        }
 
-    .details li {
-      margin: 6px 0;
-      color: var(--muted);
-    }
+        .education-card h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
 
-    .highlight {
-      font-weight: 700;
-      color: var(--text);
-    }
+        .education-card .university {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
 
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
+        .education-card .dates {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
 
-    @media (max-width: 900px) {
-      .content {
-        grid-template-columns: 1fr;
-      }
+        .education-card .gpa {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            display: inline-block;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
 
-      .sidebar {
-        border-right: none;
-        border-bottom: 1px solid var(--line);
-      }
-    }
+        .education-card ul {
+            list-style: none;
+            padding: 0;
+        }
 
-    @media (max-width: 640px) {
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+        .education-card li {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
 
-      .main {
-        padding: 22px 18px 28px;
-      }
+        .education-card li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
 
-      .two-col {
-        grid-template-columns: 1fr;
-      }
+        /* Experience Section */
+        .experience-timeline {
+            display: grid;
+            gap: 2rem;
+        }
 
-      .meta-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+        .experience-item {
+            background: var(--bg-lighter);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateX(8px);
+            border-left-color: var(--primary);
+        }
+
+        .experience-item h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .experience-item .company {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-item .dates {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .experience-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .experience-item li {
+            color: var(--text-muted);
+            margin-bottom: 0.7rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .experience-item li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-lighter);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.1);
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: rgba(15, 95, 184, 0.2);
+            color: var(--accent);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 0.7rem;
+            margin-right: 0.7rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-lighter);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 212, 255, 0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(15, 95, 184, 0.2), rgba(0, 212, 255, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1rem;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-content h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .project-content p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            font-size: 0.8rem;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-lighter);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: var(--bg-lighter);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .info-card strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card span {
+            color: var(--text-muted);
+            word-break: break-all;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            .hero-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-text .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="page">
-    <header class="topbar">
-      <div class="name">Ondrej Hacker</div>
-      <nav class="nav">
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
-
-    <div class="content">
-      <aside class="sidebar">
-        <div class="profile">
-          <div class="avatar">OH</div>
-          <div>
-            <h3>Ondrej Hacker</h3>
-            <p>Student / Researcher / Developer</p>
-          </div>
-        </div>
-
-        <div class="block" id="about">
-          <h4><span class="dot"></span> Personal Information</h4>
-          <div class="info-grid">
-            <div><strong>Date of birth:</strong> 03/05/2005</div>
-            <div><strong>Gender:</strong> Male</div>
-            <div><strong>Nationality:</strong> Slovak</div>
-            <div><strong>Phone:</strong> +421 948678462</div>
-            <div><strong>Email:</strong> hacker2@uniba.sk</div>
-            <div><strong>Home address:</strong> Stupava (Slovakia)</div>
-          </div>
-        </div>
-
-        <div class="block">
-          <h4><span class="dot"></span> Skills</h4>
-          <ul class="skills-list">
-            <li>Python, C++</li>
-            <li>Linux Shell</li>
-            <li>MS Office Suite</li>
-            <li>Data Analysis</li>
-            <li>AutoCAD</li>
-            <li>Lab Measurement Instruments</li>
-            <li>LaTeX</li>
-            <li>Driving Licence</li>
-            <li>Scout Troop Leader</li>
-            <li>Creative Problem-Solving</li>
-            <li>Calm Under Pressure</li>
-            <li>Teamwork & Adaptability</li>
-          </ul>
-        </div>
-
-        <div class="block">
-          <h4><span class="dot"></span> Language Skills</h4>
-          <ul class="lang-list">
-            <li>English</li>
-            <li>Listening: C1</li>
-            <li>Reading: C1</li>
-            <li>Speaking production: C1</li>
-            <li>Speaking interaction: B2</li>
-            <li>Writing: B2</li>
-            <li>German</li>
-            <li>Listening: B1</li>
-            <li>Reading: B1</li>
-            <li>Speaking production: B1</li>
-            <li>Speaking interaction: A2</li>
-            <li>Writing: A2</li>
-          </ul>
-        </div>
-
-        <div class="block">
-          <h4><span class="dot"></span> Driving Licence</h4>
-          <div class="info-grid">
-            <div><strong>Driving licence B</strong></div>
-          </div>
-        </div>
-      </aside>
-
-      <main class="main">
-        <section class="section" id="education">
-          <div class="section-header">
-            <h2><span class="dot"></span> Education & Training</h2>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>BSc in Physics – ongoing</h3>
-              <span class="dates">23/09/2024 – Current</span>
-            </div>
-            <div class="place">Comenius university | Bratislava, Slovakia</div>
-            <div class="place"><span class="highlight">Relevant coursework:</span></div>
-            <ul class="details">
-              <li>Numerical Methods</li>
-              <li>Linear Algebra</li>
-              <li>Mathematical Analysis</li>
-              <li>Electricity and Magnetism (Laboratory)</li>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ONDREJ HACKER</div>
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-          </div>
+        </div>
+    </nav>
 
-          <div class="entry">
-            <div class="meta-row">
-              <h3>Final grade: GPA: 3.9/4.0 | Level in EQF:6</h3>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Ondrej Hacker</h1>
+                        <p class="subtitle">Physics Student | Developer | Researcher</p>
+                        <p>Welcome to my academic portfolio. I'm a passionate physics student with interests in computational modeling, numerical simulations, and software development. Currently pursuing my BSc in Physics at Comenius University with an Erasmus exchange to Charles University.</p>
+                        <div class="cta-buttons">
+                            <a href="#projects" class="btn btn-primary">View My Work</a>
+                            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="image-placeholder">
+                            [Add your photo here]
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>Exchange Student (Erasmus), Physics</h3>
-              <span class="dates">29/09/2025 – 30/06/2026</span>
-            </div>
-            <div class="place">Charles University | Prague, Czechia</div>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>BSc in Mathematical Modelling</h3>
-              <span class="dates">29/09/2025 – Current</span>
-            </div>
-            <div class="place">Charles University | Prague, Czechia</div>
-            <div class="place"><span class="highlight">Relevant coursework:</span></div>
-            <ul class="details">
-              <li>Numerical Methods</li>
-              <li>Numerical simulation of fluid flow</li>
-            </ul>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>BSc in Physics</h3>
-              <span class="dates">23/09/2024 – 30/06/2025</span>
-            </div>
-            <div class="place">Comenius university | Bratislava, Slovakia</div>
-            <div class="place"><span class="highlight">Relevant coursework:</span></div>
-            <ul class="details">
-              <li>Fundamentals of Meteorology and Climatology</li>
-            </ul>
-          </div>
         </section>
 
-        <section class="section" id="experience">
-          <div class="section-header">
-            <h2><span class="dot"></span> Work Experience</h2>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>IT Support Technician</h3>
-              <span class="dates">15/05/2024 – 31/08/2025</span>
+        <!-- About Section -->
+        <section id="about" style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(15, 95, 184, 0.05) 100%);">
+            <div class="container">
+                <div class="section-header">
+                    <h2>About Me</h2>
+                    <div class="line"></div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                    <div>
+                        <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem;">I am a physics student from Slovakia with a strong passion for understanding complex physical phenomena through computational methods. My academic journey has led me to develop skills in programming, numerical analysis, and scientific computing.</p>
+                        <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem;">Currently, I am exploring atmospheric dynamics and fluid flow simulations while maintaining a keen interest in software development and problem-solving. I believe in the power of computational methods to solve real-world problems.</p>
+                        <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.8;">Beyond academics, I am an active Scout Troop Leader and enjoy mentoring others while continuously expanding my technical skillset.</p>
+                    </div>
+                    <div class="image-placeholder" style="height: 400px;">
+                        [Add your photo here]
+                    </div>
+                </div>
             </div>
-            <div class="place">Bratislava, Slovakia</div>
-            <ul class="details">
-              <li>Troubleshooting hardware and software issues in academic and office environments.</li>
-              <li>Basic administration of servers and IT infrastructure.</li>
-            </ul>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>Private Mathematics Tutor</h3>
-              <span class="dates">08/01/2025 – 30/06/2025</span>
-            </div>
-            <div class="place">Bratislava, Slovakia</div>
-            <ul class="details">
-              <li>Provided math tutoring focused on logical reasoning.</li>
-            </ul>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>Atmospheric CFD Simulation</h3>
-              <span class="dates">08/06/2026 – 30/09/2026</span>
-            </div>
-            <div class="place">Charles University | Prague, Czechia</div>
-            <ul class="details">
-              <li>Modeling atmospheric flow and air pollutant dispersion in urban environments.</li>
-              <li>OpenFOAM, Linux HPC cluster.</li>
-            </ul>
-          </div>
         </section>
 
-        <section class="section" id="projects">
-          <div class="section-header">
-            <h2><span class="dot"></span> Projects</h2>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>Arduino Home Weather Station</h3>
+        <!-- Education Section -->
+        <section id="education">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Education</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="education-grid">
+                    <div class="education-card">
+                        <h3>BSc in Physics</h3>
+                        <p class="university">Comenius University, Bratislava</p>
+                        <p class="dates">Sep 2024 - Jun 2025</p>
+                        <span class="gpa">GPA: 3.9/4.0</span>
+                        <ul>
+                            <li>Numerical Methods</li>
+                            <li>Linear Algebra</li>
+                            <li>Mathematical Analysis</li>
+                            <li>Electricity & Magnetism (Lab)</li>
+                        </ul>
+                    </div>
+                    <div class="education-card">
+                        <h3>Erasmus Exchange</h3>
+                        <p class="university">Charles University, Prague</p>
+                        <p class="dates">Sep 2025 - Jun 2026</p>
+                        <span class="gpa" style="background: rgba(0, 212, 255, 0.1); color: var(--accent);">Physics Exchange</span>
+                        <ul>
+                            <li>Advanced Physics</li>
+                            <li>Mathematical Modeling</li>
+                            <li>Computational Methods</li>
+                            <li>International Experience</li>
+                        </ul>
+                    </div>
+                    <div class="education-card">
+                        <h3>BSc in Mathematical Modelling</h3>
+                        <p class="university">Charles University, Prague</p>
+                        <p class="dates">Sep 2025 - Current</p>
+                        <span class="gpa" style="background: rgba(0, 212, 255, 0.1); color: var(--accent);">Ongoing</span>
+                        <ul>
+                            <li>Numerical Methods</li>
+                            <li>Fluid Flow Simulation</li>
+                            <li>Computational Modeling</li>
+                            <li>Advanced Mathematics</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="place"><span class="highlight">Mathematics, Programming & Physics Seminars</span></div>
-            <ul class="details">
-              <li>Developed a weather station with sensors and data logging.</li>
-              <li>Combined programming, numerical analysis, and physical measurements.</li>
-            </ul>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>Home Weather Station</h3>
-            </div>
-            <div class="place"><span class="highlight">Numerical Simulation of Falling Rod Dynamics</span></div>
-            <ul class="details">
-              <li>Mathematics, Programming & Physics Seminars participation.</li>
-              <li>Electronics and Arduino group project.</li>
-            </ul>
-          </div>
-
-          <div class="entry">
-            <div class="meta-row">
-              <h3>Scout Troop Leader</h3>
-            </div>
-            <div class="place"><span class="highlight">Leadership & Community Involvement</span></div>
-            <ul class="details">
-              <li>Led youth activities and organized educational and outdoor experiences.</li>
-            </ul>
-          </div>
         </section>
 
-        <section class="section" id="contact">
-          <div class="section-header">
-            <h2><span class="dot"></span> Contact</h2>
-          </div>
-
-          <div class="two-col">
-            <div class="entry">
-              <div class="place"><strong>Email:</strong> hacker2@uniba.sk</div>
-              <div class="place"><strong>Phone:</strong> +421 948678462</div>
-              <div class="place"><strong>Location:</strong> Stupava, Slovakia</div>
+        <!-- Experience Section -->
+        <section id="experience" style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(15, 95, 184, 0.05) 100%);">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Experience</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="experience-timeline">
+                    <div class="experience-item">
+                        <h3>Atmospheric CFD Simulation</h3>
+                        <p class="company">Charles University, Prague</p>
+                        <p class="dates">Jun 2026 - Sep 2026</p>
+                        <ul>
+                            <li>Modeling atmospheric flow and air pollutant dispersion in urban environments</li>
+                            <li>Working with OpenFOAM and Linux HPC clusters</li>
+                            <li>Numerical simulation and data analysis</li>
+                        </ul>
+                    </div>
+                    <div class="experience-item">
+                        <h3>IT Support Technician</h3>
+                        <p class="company">Bratislava, Slovakia</p>
+                        <p class="dates">May 2024 - Aug 2025</p>
+                        <ul>
+                            <li>Troubleshooting hardware and software issues in academic environments</li>
+                            <li>Basic server administration and IT infrastructure management</li>
+                            <li>User support and technical documentation</li>
+                        </ul>
+                    </div>
+                    <div class="experience-item">
+                        <h3>Private Mathematics Tutor</h3>
+                        <p class="company">Bratislava, Slovakia</p>
+                        <p class="dates">Jan 2025 - Jun 2025</p>
+                        <ul>
+                            <li>Provided personalized math tutoring focused on logical reasoning</li>
+                            <li>Developed teaching strategies for complex concepts</li>
+                            <li>Mentored students in problem-solving techniques</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-
-            <div class="entry">
-              <div class="place"><strong>GitHub:</strong> <a href="https://github.com/ondrejhacker">ondrejhacker</a></div>
-              <div class="place"><strong>LinkedIn:</strong> Add your profile</div>
-              <div class="place"><strong>Portfolio:</strong> <a href="https://ondrejhacker.github.io">ondrejhacker.github.io</a></div>
-            </div>
-          </div>
         </section>
-      </main>
-    </div>
-  </div>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Skills & Languages</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>🖥️ Technical Skills</h3>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Linux Shell</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">LaTeX</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">OpenFOAM</span>
+                        <span class="skill-tag">HPC Clusters</span>
+                    </div>
+                    <div class="skill-category">
+                        <h3>📊 Tools & Software</h3>
+                        <span class="skill-tag">AutoCAD</span>
+                        <span class="skill-tag">MS Office Suite</span>
+                        <span class="skill-tag">Lab Measurement</span>
+                        <span class="skill-tag">Numerical Methods</span>
+                        <span class="skill-tag">Wolfram Math</span>
+                        <span class="skill-tag">GiT</span>
+                    </div>
+                    <div class="skill-category">
+                        <h3>🌍 Languages</h3>
+                        <span class="skill-tag">English (C1)</span>
+                        <span class="skill-tag">Slovak (Native)</span>
+                        <span class="skill-tag">German (B1)</span>
+                        <span class="skill-tag">Reading (C1)</span>
+                        <span class="skill-tag">Writing (B2)</span>
+                    </div>
+                    <div class="skill-category">
+                        <h3>💡 Soft Skills</h3>
+                        <span class="skill-tag">Problem-Solving</span>
+                        <span class="skill-tag">Creative Thinking</span>
+                        <span class="skill-tag">Teamwork</span>
+                        <span class="skill-tag">Adaptability</span>
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">Communication</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(15, 95, 184, 0.05) 100%);">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Projects</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            [Project image placeholder]
+                        </div>
+                        <div class="project-content">
+                            <h3>Arduino Home Weather Station</h3>
+                            <p>A comprehensive weather monitoring system combining hardware sensors, Arduino programming, and data logging. Part of mathematics, programming, and physics seminars.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Arduino</span>
+                                <span class="project-tag">Sensors</span>
+                                <span class="project-tag">Data Logging</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            [Project image placeholder]
+                        </div>
+                        <div class="project-content">
+                            <h3>Numerical Simulation of Falling Rod Dynamics</h3>
+                            <p>A physics and mathematics project focusing on the numerical simulation of complex rod dynamics. Combines mathematical modeling with computational methods.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Numerical Methods</span>
+                                <span class="project-tag">Physics</span>
+                                <span class="project-tag">Simulation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            [Project image placeholder]
+                        </div>
+                        <div class="project-content">
+                            <h3>Scout Troop Leadership</h3>
+                            <p>Leading youth activities and organizing educational outdoor experiences. Developing leadership skills while fostering community engagement and personal growth in scouts.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Leadership</span>
+                                <span class="project-tag">Community</span>
+                                <span class="project-tag">Education</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                    <h2>Get In Touch</h2>
+                    <div class="line" style="margin: 1rem auto 0;"></div>
+                </div>
+                <div class="contact-content">
+                    <p>I'm always interested in hearing about academic opportunities, collaborations, and new projects. Feel free to reach out!</p>
+                    <div class="contact-links">
+                        <a href="mailto:ondrej.hacker949@student.cuni.cz" class="contact-link">
+                            ✉️ Email
+                        </a>
+                        <a href="https://github.com/ondrejhacker" target="_blank" class="contact-link">
+                            💻 GitHub
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="contact-link">
+                            🔗 LinkedIn
+                        </a>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <strong>📧 Email</strong>
+                            <span>ondrej.hacker949@student.cuni.cz</span>
+                        </div>
+                        <div class="info-card">
+                            <strong>📱 Phone</strong>
+                            <span>+421 948 678 462</span>
+                        </div>
+                        <div class="info-card">
+                            <strong>📍 Location</strong>
+                            <span>Stupava, Slovakia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Ondrej Hacker. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Built with HTML & CSS | Hosted on GitHub Pages</p>
+    </footer>
+
+    <script>
+        // Navigation active link highlight
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
 </body>
 </html>
