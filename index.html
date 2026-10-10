@@ -1,12 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Personal Wwwebsite</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ondrej Hacker | Personal Website</title>
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --panel: #ffffff;
+      --panel-soft: #f7f9fc;
+      --text: #1f2937;
+      --muted: #51607a;
+      --primary: #0d5bd7;
+      --primary-soft: #eaf2ff;
+      --accent: #0b3a8a;
+      --line: #dfe7f4;
+      --green: #1d9d72;
+      --shadow: 0 10px 30px rgba(21, 39, 69, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 1200px;
+      margin: 32px auto;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, #0d5bd7, #0b3a8a);
+      color: white;
+      padding: 24px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .name {
+      font-size: clamp(1.5rem, 2vw, 2.3rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 0.96rem;
+    }
+
+    .nav a {
+      color: white;
+      opacity: 0.9;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--panel-soft);
+      border-right: 1px solid var(--line);
+      padding: 28px 24px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0d5bd7, #2d87ff);
+      color: white;
+      font-weight: 700;
+      font-size: 1.6rem;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 24px rgba(13, 91, 215, 0.25);
+    }
+
+    .profile h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .profile p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .block {
+      margin-bottom: 32px;
+    }
+
+    .block h4 {
+      font-size: 1.05rem;
+      margin: 0 0 12px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .skills-list, .lang-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .skills-list li, .lang-list li {
+      margin: 8px 0;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skills-list li::before, .lang-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .info-grid strong {
+      color: var(--primary);
+    }
+
+    .main {
+      padding: 30px 30px 40px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .entry {
+      margin-bottom: 22px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .meta-row h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+
+    .dates {
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .place {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin-bottom: 8px;
+    }
+
+    .details {
+      margin: 0;
+      color: var(--text);
+      padding-left: 18px;
+    }
+
+    .details li {
+      margin: 6px 0;
+      color: var(--muted);
+    }
+
+    .highlight {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .main {
+        padding: 22px 18px 28px;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Goodbye, World!</h1>
-  <p>Welcome to my site hosted on GitHub Pages.</p>
+  <div class="page">
+    <header class="topbar">
+      <div class="name">Ondrej Hacker</div>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div class="content">
+      <aside class="sidebar">
+        <div class="profile">
+          <div class="avatar">OH</div>
+          <div>
+            <h3>Ondrej Hacker</h3>
+            <p>Student / Researcher / Developer</p>
+          </div>
+        </div>
+
+        <div class="block" id="about">
+          <h4><span class="dot"></span> Personal Information</h4>
+          <div class="info-grid">
+            <div><strong>Date of birth:</strong> 03/05/2005</div>
+            <div><strong>Gender:</strong> Male</div>
+            <div><strong>Nationality:</strong> Slovak</div>
+            <div><strong>Phone:</strong> +421 948678462</div>
+            <div><strong>Email:</strong> hacker2@uniba.sk</div>
+            <div><strong>Home address:</strong> Stupava (Slovakia)</div>
+          </div>
+        </div>
+
+        <div class="block">
+          <h4><span class="dot"></span> Skills</h4>
+          <ul class="skills-list">
+            <li>Python, C++</li>
+            <li>Linux Shell</li>
+            <li>MS Office Suite</li>
+            <li>Data Analysis</li>
+            <li>AutoCAD</li>
+            <li>Lab Measurement Instruments</li>
+            <li>LaTeX</li>
+            <li>Driving Licence</li>
+            <li>Scout Troop Leader</li>
+            <li>Creative Problem-Solving</li>
+            <li>Calm Under Pressure</li>
+            <li>Teamwork & Adaptability</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h4><span class="dot"></span> Language Skills</h4>
+          <ul class="lang-list">
+            <li>English</li>
+            <li>Listening: C1</li>
+            <li>Reading: C1</li>
+            <li>Speaking production: C1</li>
+            <li>Speaking interaction: B2</li>
+            <li>Writing: B2</li>
+            <li>German</li>
+            <li>Listening: B1</li>
+            <li>Reading: B1</li>
+            <li>Speaking production: B1</li>
+            <li>Speaking interaction: A2</li>
+            <li>Writing: A2</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h4><span class="dot"></span> Driving Licence</h4>
+          <div class="info-grid">
+            <div><strong>Driving licence B</strong></div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="section" id="education">
+          <div class="section-header">
+            <h2><span class="dot"></span> Education & Training</h2>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>BSc in Physics – ongoing</h3>
+              <span class="dates">23/09/2024 – Current</span>
+            </div>
+            <div class="place">Comenius university | Bratislava, Slovakia</div>
+            <div class="place"><span class="highlight">Relevant coursework:</span></div>
+            <ul class="details">
+              <li>Numerical Methods</li>
+              <li>Linear Algebra</li>
+              <li>Mathematical Analysis</li>
+              <li>Electricity and Magnetism (Laboratory)</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>Final grade: GPA: 3.9/4.0 | Level in EQF:6</h3>
+            </div>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>Exchange Student (Erasmus), Physics</h3>
+              <span class="dates">29/09/2025 – 30/06/2026</span>
+            </div>
+            <div class="place">Charles University | Prague, Czechia</div>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>BSc in Mathematical Modelling</h3>
+              <span class="dates">29/09/2025 – Current</span>
+            </div>
+            <div class="place">Charles University | Prague, Czechia</div>
+            <div class="place"><span class="highlight">Relevant coursework:</span></div>
+            <ul class="details">
+              <li>Numerical Methods</li>
+              <li>Numerical simulation of fluid flow</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>BSc in Physics</h3>
+              <span class="dates">23/09/2024 – 30/06/2025</span>
+            </div>
+            <div class="place">Comenius university | Bratislava, Slovakia</div>
+            <div class="place"><span class="highlight">Relevant coursework:</span></div>
+            <ul class="details">
+              <li>Fundamentals of Meteorology and Climatology</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" id="experience">
+          <div class="section-header">
+            <h2><span class="dot"></span> Work Experience</h2>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>IT Support Technician</h3>
+              <span class="dates">15/05/2024 – 31/08/2025</span>
+            </div>
+            <div class="place">Bratislava, Slovakia</div>
+            <ul class="details">
+              <li>Troubleshooting hardware and software issues in academic and office environments.</li>
+              <li>Basic administration of servers and IT infrastructure.</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>Private Mathematics Tutor</h3>
+              <span class="dates">08/01/2025 – 30/06/2025</span>
+            </div>
+            <div class="place">Bratislava, Slovakia</div>
+            <ul class="details">
+              <li>Provided math tutoring focused on logical reasoning.</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>Atmospheric CFD Simulation</h3>
+              <span class="dates">08/06/2026 – 30/09/2026</span>
+            </div>
+            <div class="place">Charles University | Prague, Czechia</div>
+            <ul class="details">
+              <li>Modeling atmospheric flow and air pollutant dispersion in urban environments.</li>
+              <li>OpenFOAM, Linux HPC cluster.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" id="projects">
+          <div class="section-header">
+            <h2><span class="dot"></span> Projects</h2>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>Arduino Home Weather Station</h3>
+            </div>
+            <div class="place"><span class="highlight">Mathematics, Programming & Physics Seminars</span></div>
+            <ul class="details">
+              <li>Developed a weather station with sensors and data logging.</li>
+              <li>Combined programming, numerical analysis, and physical measurements.</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>Home Weather Station</h3>
+            </div>
+            <div class="place"><span class="highlight">Numerical Simulation of Falling Rod Dynamics</span></div>
+            <ul class="details">
+              <li>Mathematics, Programming & Physics Seminars participation.</li>
+              <li>Electronics and Arduino group project.</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="meta-row">
+              <h3>Scout Troop Leader</h3>
+            </div>
+            <div class="place"><span class="highlight">Leadership & Community Involvement</span></div>
+            <ul class="details">
+              <li>Led youth activities and organized educational and outdoor experiences.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" id="contact">
+          <div class="section-header">
+            <h2><span class="dot"></span> Contact</h2>
+          </div>
+
+          <div class="two-col">
+            <div class="entry">
+              <div class="place"><strong>Email:</strong> hacker2@uniba.sk</div>
+              <div class="place"><strong>Phone:</strong> +421 948678462</div>
+              <div class="place"><strong>Location:</strong> Stupava, Slovakia</div>
+            </div>
+
+            <div class="entry">
+              <div class="place"><strong>GitHub:</strong> <a href="https://github.com/ondrejhacker">ondrejhacker</a></div>
+              <div class="place"><strong>LinkedIn:</strong> Add your profile</div>
+              <div class="place"><strong>Portfolio:</strong> <a href="https://ondrejhacker.github.io">ondrejhacker.github.io</a></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
 </body>
 </html>
